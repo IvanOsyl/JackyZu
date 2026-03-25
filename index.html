@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feliz Cumple Jacky</title>
+  <title>Feliz Cumple Wladi</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/estilos.css">
@@ -29,12 +29,180 @@
         <path
           d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z" />
       </svg>
-      <div class="almeyda">Porque Jacky es botado, manco, mal internet, chapado, sin horario de sueño, buen pata y rosquete.</div>
+      <div class="almeyda">Ivan.</div>
     </div>
   </div>
   <div class="parafrase">
-    <p>De Ivan para <span>El mejor chino, peruano y gringo del mundo</span></p>
+    <p>De Ivan para <span>El mejor chileno, gachalover y amigo</span></p>
   </div>
+  <!-- Scratch Card para revelar el código de regalo -->
+  <div id="scratch-container">
+    <div class="scratch-title"></div>
+    <div class="scratch-flex">
+      <div id="scratch-code">LDF3-GKQL-GFPN</div>
+      <canvas id="scratch-canvas" width="300" height="60"></canvas>
+    </div>
+  </div>
+<style>
+#scratch-container {
+  width: 100%;
+  max-width: 340px;
+  margin: 40px auto 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+.scratch-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.scratch-flex {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#scratch-code {
+  width: 100%;
+  max-width: 300px;
+  height: 60px;
+  background: #fff;
+  color: #770202;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  font-family: monospace;
+  letter-spacing: 4px;
+  border-radius: 12px;
+  border: 2px solid #aaa;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 0.7s;
+  box-sizing: border-box;
+}
+#scratch-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  z-index: 2;
+  pointer-events: auto;
+  width: 100%;
+  max-width: 300px;
+  height: 60px;
+}
+@media (max-width: 400px) {
+  #scratch-container {
+    max-width: 98vw;
+  }
+  #scratch-code, #scratch-canvas {
+    max-width: 98vw;
+    font-size: 1em;
+  }
+}
+</style>
+<script>
+// Ajustar tamaño del canvas al tamaño real mostrado
+function resizeScratchCanvas() {
+  const canvas = document.getElementById('scratch-canvas');
+  const codeDiv = document.getElementById('scratch-code');
+  const rect = codeDiv.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  drawScratchCover();
+}
+window.addEventListener('resize', resizeScratchCanvas);
+window.addEventListener('DOMContentLoaded', resizeScratchCanvas);
+// Efecto scratch card simple (variables únicas)
+const scratchCanvas = document.getElementById('scratch-canvas');
+const scratchCtx = scratchCanvas.getContext('2d');
+const codeDiv = document.getElementById('scratch-code');
+let isScratchDrawing = false;
+
+function drawScratchCover() {
+  scratchCtx.globalCompositeOperation = 'source-over';
+  scratchCtx.fillStyle = '#bdbdbd';
+  scratchCtx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
+  scratchCtx.font = 'bold 1.2em sans-serif';
+  scratchCtx.fillStyle = '#888';
+  scratchCtx.textAlign = 'center';
+  scratchCtx.fillText('Raspa aquí', scratchCanvas.width/2, scratchCanvas.height/2 + 10);
+}
+drawScratchCover();
+
+function getScratchPointerPos(e) {
+  const rect = scratchCanvas.getBoundingClientRect();
+  let x, y;
+  if (e.touches) {
+    x = e.touches[0].clientX - rect.left;
+    y = e.touches[0].clientY - rect.top;
+  } else {
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+  }
+  return {x, y};
+}
+
+function scratch(e) {
+  if (!isScratchDrawing) return;
+  const {x, y} = getScratchPointerPos(e);
+  scratchCtx.globalCompositeOperation = 'destination-out';
+  scratchCtx.beginPath();
+  scratchCtx.arc(x, y, 18, 0, 2 * Math.PI);
+  scratchCtx.fill();
+}
+
+scratchCanvas.addEventListener('mousedown', e => { isScratchDrawing = true; scratch(e); });
+
+scratchCanvas.addEventListener('mousemove', function(e) {
+  if (isScratchDrawing) {
+    scratch(e);
+    checkScratchPercent();
+  }
+});
+scratchCanvas.addEventListener('mouseup', function(e) {
+  isScratchDrawing = false;
+  checkScratchPercent();
+});
+scratchCanvas.addEventListener('mouseleave', function(e) {
+  isScratchDrawing = false;
+  checkScratchPercent();
+});
+
+scratchCanvas.addEventListener('touchstart', e => { isScratchDrawing = true; scratch(e); });
+
+scratchCanvas.addEventListener('touchmove', function(e) {
+  if (isScratchDrawing) {
+    scratch(e);
+    checkScratchPercent();
+  }
+  e.preventDefault();
+});
+scratchCanvas.addEventListener('touchend', function(e) {
+  isScratchDrawing = false;
+  checkScratchPercent();
+});
+
+function checkScratchPercent() {
+  const imageData = scratchCtx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height);
+  let cleared = 0;
+  for (let i = 0; i < imageData.data.length; i += 4) {
+    if (imageData.data[i + 3] === 0) cleared++;
+  }
+  const percent = cleared / (scratchCanvas.width * scratchCanvas.height) * 100;
+  if (percent > 55) {
+    document.getElementById('scratch-code').style.opacity = 1;
+    scratchCanvas.style.transition = 'opacity 0.7s';
+    scratchCanvas.style.opacity = 0;
+    setTimeout(() => scratchCanvas.style.display = 'none', 700);
+  }
+}
+scratchCanvas.addEventListener('mouseup', checkScratchPercent);
+scratchCanvas.addEventListener('touchend', checkScratchPercent);
+</script>
 </body>
 <script src="js/howler.min.js"></script>
 <script src="js/app.js"></script>

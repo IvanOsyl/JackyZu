@@ -6,7 +6,7 @@ var w = c.width = window.innerWidth,
 	hh = h / 2,
 
 	opts = {
-		cadenabyAlmeyda: ['FELIZ', 'CUMPLEANOS', 'JACKY'],
+		cadenabyAlmeyda: ['FELIZ', 'CUMPLEANOS', 'WLADI'],
 		sizeDeFuente: 30,
 		espacioDeFuente: 30,
 		lineHeight: 40,
